@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/dabenxiang-security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+  session:
+    store-type: none
+security:
+  basic:
+    enabled: false
+
+    
+
+
+    
+
