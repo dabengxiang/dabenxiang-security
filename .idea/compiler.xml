@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dabenxiang-security-app" />
+        <module name="dabenxiang-security-authorize" />
+        <module name="dabenxiang-security-browser" />
+        <module name="dabenxiang-security-core" />
+        <module name="dabenxiang-security-demo" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dabenxiang-security" target="1.8" />
+      <module name="dabenxiang-security-app" target="1.8" />
+      <module name="dabenxiang-security-authorize" target="1.8" />
+      <module name="dabenxiang-security-browser" target="1.8" />
+      <module name="dabenxiang-security-core" target="1.8" />
+      <module name="dabenxiang-security-demo" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
