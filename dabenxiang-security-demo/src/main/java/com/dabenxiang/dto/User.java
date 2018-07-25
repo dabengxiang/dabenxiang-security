@@ -1,8 +1,10 @@
 package com.dabenxiang.dto;
 
+
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.NotBlank;
 
-import java.io.Serializable;
+import java.util.Date;
 
 /**
  * project name : mysecurity
@@ -10,14 +12,25 @@ import java.io.Serializable;
  * Author: yc.guo
  * DESC:
  */
-public class User implements Serializable {
+public class User {
+
+    public interface UserSimpleView{};
+
+
+    public interface UserDetailView extends UserSimpleView {};
+
 
     private String id;
 
     private String username;
 
+    @NotBlank
     private String password;
 
+    private Date birthday;
+
+
+    @JsonView(User.UserSimpleView.class)
     public String getId() {
         return id;
     }
@@ -26,6 +39,7 @@ public class User implements Serializable {
         this.id = id;
     }
 
+    @JsonView(User.UserSimpleView.class)
     public String getUsername() {
         return username;
     }
@@ -34,11 +48,21 @@ public class User implements Serializable {
         this.username = username;
     }
 
+    @JsonView(User.UserDetailView.class)
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @JsonView(User.UserSimpleView.class)
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
     }
 }
