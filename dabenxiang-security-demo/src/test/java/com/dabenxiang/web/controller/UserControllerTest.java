@@ -47,5 +47,33 @@ public class UserControllerTest {
     }
     
     
+    
+    @Test
+    public void query() throws  Exception{
+        String contentAsString = mockMvc.perform(post("/user")
+                .param("id","1")
+                .param("username","dabenxiang")
+                .param("password","123")
+                .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(contentAsString );
+
+    }
+    
+    
+    @Test
+    public void whenCreateSuccess() throws  Exception{
+        String contentAsString = mockMvc.perform(get("/user")
+                .param("username", "张三")
+                .param("password", "554"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(3))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(contentAsString);
+    }
+    
+    
+    
 
 }

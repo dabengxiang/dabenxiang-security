@@ -1,7 +1,8 @@
 package com.dabenxiang.dto;
 
-import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
+
+import java.io.Serializable;
 
 /**
  * project name : mysecurity
@@ -9,7 +10,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * Author: yc.guo
  * DESC:
  */
-public class User {
+public class User implements Serializable {
 
     private String id;
 
