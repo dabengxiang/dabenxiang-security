@@ -24,6 +24,16 @@ public class User {
 
     private String username;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                '}';
+    }
+
     @NotBlank
     private String password;
 
