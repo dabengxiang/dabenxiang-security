@@ -1,7 +1,10 @@
 package com.dabenxiang.dto;
 
 
+import com.dabenxiang.vaildate.MyConstraint;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
@@ -12,6 +15,8 @@ import java.util.Date;
  * Author: yc.guo
  * DESC:
  */
+
+@ApiModel("用户的模型")
 public class User {
 
     public interface UserSimpleView{};
@@ -22,6 +27,7 @@ public class User {
 
     private String id;
 
+    @MyConstraint(message = "用户名不规范！！")
     private String username;
 
     @Override
@@ -35,8 +41,10 @@ public class User {
     }
 
     @NotBlank
+    @ApiModelProperty("密码")
     private String password;
 
+    @ApiModelProperty("生日")
     private Date birthday;
 
 

@@ -27,6 +27,6 @@ public class MyConstraintValidator implements ConstraintValidator<MyConstraint, 
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         helloService.hello("你好");
         System.out.println(value);
-        return true;
+        return false;
     }
 }

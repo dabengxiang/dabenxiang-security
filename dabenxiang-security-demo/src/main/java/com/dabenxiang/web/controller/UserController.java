@@ -2,11 +2,16 @@ package com.dabenxiang.web.controller;
 
 import com.dabenxiang.dto.User;
 
+import com.dabenxiang.exception.UserNotException;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,11 +29,14 @@ import java.util.List;
 
 
 @RestController
+@EnableScheduling
 @RequestMapping("/user")
+@Api("用户处理")
 public class UserController {
 
     @GetMapping("/{id:\\d+}")
-    public User query(@PathVariable String id){
+    @ApiOperation("查询用户")
+    public User query(@PathVariable @ApiParam("用户id") String id){
         User user = new User();
         user.setUsername("dabenxiang");
         return user;
@@ -58,7 +66,6 @@ public class UserController {
    // @JsonView(User.UserSimpleView.class)  //简单的传输
     @JsonView(User.UserDetailView.class)
     public User getSimpleView(@Valid User inputUser,BindingResult errors){
-
         if(errors.hasErrors()){
             errors.getAllErrors().stream().forEach(error-> System.out.println(error));
         }
@@ -72,9 +79,26 @@ public class UserController {
         return user;
     }
 
+    @JsonView(User.UserDetailView.class)
+    @GetMapping("/error")
+    public User errorExample(@Valid User inputUser){
+        User user = new User();
+
+        user.setBirthday(new Date());
+        user.setId("1234");
+        user.setUsername("胡亚");
+        user.setPassword("2222");
+        return user;
+    }
+
     @PostMapping("/json")
     public User getJsonUser(@Valid @RequestBody User user){
         return user;
+    }
+
+    @GetMapping("/handlerException/{id:\\d+}")
+    public User handlerException(@PathVariable String id){
+        throw new UserNotException(id);
     }
 
 }

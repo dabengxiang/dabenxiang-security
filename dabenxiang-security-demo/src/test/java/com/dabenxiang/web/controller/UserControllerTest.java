@@ -1,5 +1,6 @@
 package com.dabenxiang.web.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.fileUpload;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -12,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
@@ -114,6 +116,15 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
         System.out.println(contentAsString);
+    }
+
+    @Test
+    public void whenUpLoadSuccess() throws Exception {
+        String fileInfo = mockMvc.perform(fileUpload("/file")
+                .file(new MockMultipartFile("file", "upload.txt", "multipart/form-data", "hello upload".getBytes())))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(fileInfo);
     }
 
 
