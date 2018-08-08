@@ -12,6 +12,9 @@ security:
   basic:
     enabled: false
 
+
+#dabenxiang.security.browser.loginPage: /login_demon.html
+
     
 
 

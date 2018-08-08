@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
  * Desc:
  */
 
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class TimeAspect {
 
     @Around("execution(* com.dabenxiang.web.controller.UserController.*(..)) ")

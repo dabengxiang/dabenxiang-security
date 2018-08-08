@@ -19,8 +19,8 @@ import java.util.concurrent.Callable;
  * Desc:
  */
 
-@RestController
-@RequestMapping("/order")
+//@RestController
+//@RequestMapping("/order")
 public class AsyncController {
 
     private Logger logger = LoggerFactory.getLogger(getClass());

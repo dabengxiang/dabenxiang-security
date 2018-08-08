@@ -7,6 +7,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
@@ -35,4 +36,11 @@ public class webConfig extends WebMvcConfigurerAdapter {
         registrationBean.addUrlPatterns("/*");
         return registrationBean;
     }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//       registry.addResourceHandler("/resource/**").addResourceLocations("classpath:/resource/");
+//        super.addResourceHandlers(registry);
+//    }
+
+
 }

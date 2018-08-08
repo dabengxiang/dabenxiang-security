@@ -13,7 +13,7 @@ import org.springframework.web.context.request.async.DeferredResult;
  * Desc:
  */
 
-@Component
+//@Component
 public class OrderListerner {
 
     @Autowired
