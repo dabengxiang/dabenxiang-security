@@ -1,5 +1,7 @@
 package com.dabenxiang.security;
 
+import com.dabenxiang.security.authentication.GycAuthenticationFailureHandler;
+import com.dabenxiang.security.authentication.GycAuthenticationSuccessHandler;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +21,13 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SecurityProperties securityProperties;
 
+    @Autowired
+    private GycAuthenticationSuccessHandler gycAuthenticationSuccessHandler;
+
+
+    @Autowired
+    private GycAuthenticationFailureHandler gycAuthenticationFailureHandler;
+
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
         return  new BCryptPasswordEncoder();
@@ -29,13 +38,14 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.httpBasic().and().authorizeRequests().anyRequest().authenticated();
         http.formLogin().loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
+                .successHandler(gycAuthenticationSuccessHandler)
+                .failureHandler(gycAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require",
+                .antMatchers("/authentication/require","/code/image",
                         securityProperties.getBrowser().getLoginPage()).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
-
 //        super.configure(http);
     }
 

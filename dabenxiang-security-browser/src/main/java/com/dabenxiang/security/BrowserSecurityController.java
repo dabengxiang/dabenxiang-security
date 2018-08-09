@@ -49,7 +49,6 @@ public class BrowserSecurityController {
                 logger.info("引发过来的路径是："+redirectUrl);
                 String loginPage = securityProperties.getBrowser().getLoginPage();
                 redirectStrategy.sendRedirect(request,response,loginPage);
-
             }
 
         }

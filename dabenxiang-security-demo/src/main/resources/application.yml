@@ -11,6 +11,10 @@ spring:
 security:
   basic:
     enabled: false
+dabenxiang:
+  security:
+    browser:
+      loginType: REDIRECT
 
 
 #dabenxiang.security.browser.loginPage: /login_demon.html

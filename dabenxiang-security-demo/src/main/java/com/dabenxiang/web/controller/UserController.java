@@ -12,6 +12,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +35,12 @@ import java.util.List;
 @RequestMapping("/user")
 @Api("用户处理")
 public class UserController {
+
+
+    @GetMapping("/userDetails")
+    public UserDetails getUser(@AuthenticationPrincipal UserDetails userDetails){
+        return userDetails;
+    }
 
     @GetMapping("/{id:\\d+}")
     @ApiOperation("查询用户")
