@@ -24,7 +24,6 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private GycAuthenticationSuccessHandler gycAuthenticationSuccessHandler;
 
-
     @Autowired
     private GycAuthenticationFailureHandler gycAuthenticationFailureHandler;
 
@@ -42,7 +41,7 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
                 .failureHandler(gycAuthenticationFailureHandler)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require","/code/image",
+                .antMatchers("/authentication/require","/code/*",
                         securityProperties.getBrowser().getLoginPage()).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();

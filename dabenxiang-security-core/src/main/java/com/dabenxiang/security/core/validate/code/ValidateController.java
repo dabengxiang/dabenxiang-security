@@ -4,14 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
-import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Date:2018/8/9
@@ -26,16 +26,12 @@ public class ValidateController {
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     @Autowired
-    private ImageGenerate imageGenerate;
+    private Map<String,ValidateCodeProcessor> validateCodeProcessors;
 
-    private final String PIC_CODE_SESSION = "PIC_VALIVATE_CODE";
+    @GetMapping("/code/{type}")
+    public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable("type")String type) throws IOException {
+        validateCodeProcessors.get(type+"CodeProcessor").create(new ServletWebRequest(request,response));
 
-
-    @GetMapping("/code/image")
-    public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        ImageCode generate = imageGenerate.generate();
-        sessionStrategy.setAttribute(new ServletWebRequest(request),PIC_CODE_SESSION,generate);
-        ImageIO.write(generate.getBufferedImage(),"JPEG", response.getOutputStream());
     }
 
 

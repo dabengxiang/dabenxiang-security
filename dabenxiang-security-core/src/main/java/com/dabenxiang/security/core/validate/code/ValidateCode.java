@@ -4,35 +4,21 @@ import java.awt.image.BufferedImage;
 import java.time.LocalTime;
 
 /**
- * Date:2018/8/9
+ * Date:2018/8/20
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-public class ImageCode {
-
-    private BufferedImage bufferedImage;
-
+public class ValidateCode {
     private String code;
-
     private LocalTime localTime;
-
 
     public  boolean isExpire(){
         return LocalTime.now().isAfter(localTime);
     }
 
-
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
-    }
-
-    public BufferedImage getBufferedImage() {
-        return bufferedImage;
-    }
-
-    public void setBufferedImage(BufferedImage bufferedImage) {
-        this.bufferedImage = bufferedImage;
     }
 
     public String getCode() {
@@ -51,17 +37,16 @@ public class ImageCode {
         this.localTime = localTime;
     }
 
-    public ImageCode(BufferedImage bufferedImage, String code, LocalTime localTime) {
-        this.bufferedImage = bufferedImage;
+    public ValidateCode(String code, LocalTime localTime) {
         this.code = code;
         this.localTime = localTime;
     }
 
-    public ImageCode(BufferedImage bufferedImage,String code, int timeLenth){
-
-        this.bufferedImage = bufferedImage;
+    public ValidateCode(String code, int timeLenth){
         this.code = code;
         LocalTime now = LocalTime.now();
         this.localTime = now;
     }
+
+
 }

@@ -1,4 +1,9 @@
-package com.dabenxiang.security.core.validate.code;
+package com.dabenxiang.security.core.validate.code.image;
+
+import com.dabenxiang.security.core.properties.ImageCodeProperties;
+import com.dabenxiang.security.core.properties.SecurityProperties;
+import com.dabenxiang.security.core.validate.code.ValidateCodeGenerate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -7,16 +12,23 @@ import java.util.Random;
 /**
  * Date:2018/8/9
  * Author: yc.guo the one whom in nengxun
- * Desc:
+ * Desc: 生成图片的验证码的一个类
  */
-public class DefaultImageGenerate implements  ImageGenerate {
+public class ImageValidateCodeGenerate implements ValidateCodeGenerate {
 
+    @Autowired
+    private SecurityProperties  securityProperties;
 
-
-    @Override
+    /**
+     * 生成图片验证码
+     * @return
+     */
     public ImageCode generate() {
-        int width = 67;
-        int height = 23;
+        ImageCodeProperties imageCodeProperties = securityProperties.getCode().getImageCodeProperties();
+
+        int width = imageCodeProperties.getWidth();
+        int height = imageCodeProperties.getHeight();
+
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         Graphics g = image.getGraphics();
@@ -36,7 +48,7 @@ public class DefaultImageGenerate implements  ImageGenerate {
         }
 
         String sRand = "";
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < imageCodeProperties.getLength(); i++) {
             String rand = String.valueOf(random.nextInt(10));
             sRand += rand;
             g.setColor(new Color(20 + random.nextInt(110), 20 + random.nextInt(110), 20 + random.nextInt(110)));
@@ -45,7 +57,7 @@ public class DefaultImageGenerate implements  ImageGenerate {
 
         g.dispose();
 
-        return new ImageCode(image, sRand, 60);
+        return new ImageCode(image, sRand, imageCodeProperties.getExpireIn());
     }
 
     /**
@@ -67,5 +79,13 @@ public class DefaultImageGenerate implements  ImageGenerate {
         int g = fc + random.nextInt(bc - fc);
         int b = fc + random.nextInt(bc - fc);
         return new Color(r, g, b);
+    }
+
+    public SecurityProperties getSecurityProperties() {
+        return securityProperties;
+    }
+
+    public void setSecurityProperties(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
     }
 }

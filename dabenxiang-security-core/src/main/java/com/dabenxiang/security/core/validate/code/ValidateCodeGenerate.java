@@ -5,8 +5,8 @@ package com.dabenxiang.security.core.validate.code;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-public interface ImageGenerate {
+public interface ValidateCodeGenerate {
 
-    public ImageCode generate();
+    public ValidateCode generate();
 
 }

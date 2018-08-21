@@ -20,22 +20,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class webConfig extends WebMvcConfigurerAdapter {
 
-    @Autowired
-    private TimeInterceptor timeInterceptor;
-
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(timeInterceptor);
-        super.addInterceptors(registry);
-    }
-
-    @Bean
-    public FilterRegistrationBean timeFilter(){
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new TimeFilter());
-        registrationBean.addUrlPatterns("/*");
-        return registrationBean;
-    }
+//    @Autowired
+//    private TimeInterceptor timeInterceptor;
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(timeInterceptor);
+//        super.addInterceptors(registry);
+//    }
+//
+//    @Bean
+//    public FilterRegistrationBean timeFilter(){
+//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        registrationBean.setFilter(new TimeFilter());
+//        registrationBean.addUrlPatterns("/*");
+//        return registrationBean;
+//    }
 //    @Override
 //    public void addResourceHandlers(ResourceHandlerRegistry registry) {
 //       registry.addResourceHandler("/resource/**").addResourceLocations("classpath:/resource/");
