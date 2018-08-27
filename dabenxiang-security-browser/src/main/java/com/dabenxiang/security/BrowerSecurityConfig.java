@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * Date:2018/8/7
@@ -27,6 +31,12 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private GycAuthenticationFailureHandler gycAuthenticationFailureHandler;
 
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
+
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
         return  new BCryptPasswordEncoder();
@@ -34,18 +44,30 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.httpBasic().and().authorizeRequests().anyRequest().authenticated();
         http.formLogin().loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
                 .successHandler(gycAuthenticationSuccessHandler)
                 .failureHandler(gycAuthenticationFailureHandler)
+                .and()
+                .rememberMe()
+                    .tokenRepository(getTokenRepository())
+                    .tokenValiditySeconds(6000)
+                    .userDetailsService(myUserDetailsService)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/authentication/require","/code/*",
                         securityProperties.getBrowser().getLoginPage()).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable();
-//        super.configure(http);
+    }
+
+
+    @Bean
+    public PersistentTokenRepository getTokenRepository(){
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+//        jdbcTokenRepository.setCreateTableOnStartup(true);
+        return jdbcTokenRepository;
     }
 
 
