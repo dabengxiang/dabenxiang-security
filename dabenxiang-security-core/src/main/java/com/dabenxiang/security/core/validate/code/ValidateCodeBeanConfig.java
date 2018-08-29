@@ -20,8 +20,8 @@ public class ValidateCodeBeanConfig {
     @Autowired
     private SecurityProperties securityProperties;
 
-    @Bean("imageCodeGenerate")
-    @ConditionalOnMissingBean(name = "imageCodeGenerate")
+    @Bean("imageValidateCodeGenerate")
+    @ConditionalOnMissingBean(name = "imageValidateCodeGenerate")
     public ValidateCodeGenerate getImageGenerate(){
         ImageValidateCodeGenerate imageValidateCodeGenerate = new ImageValidateCodeGenerate();
         imageValidateCodeGenerate.setSecurityProperties(securityProperties);

@@ -15,6 +15,12 @@ dabenxiang:
   security:
     browser:
       loginType: REDIRECT
+    validateCodeProperties:
+      smsCodeProperties:
+        expireIn: 300
+
+
+
 
 
 #dabenxiang.security.browser.loginPage: /login_demon.html

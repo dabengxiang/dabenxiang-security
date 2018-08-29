@@ -2,6 +2,7 @@ package com.dabenxiang.security.core.validate.code;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalTime;
+import java.util.logging.Logger;
 
 /**
  * Date:2018/8/20
@@ -45,7 +46,7 @@ public class ValidateCode {
     public ValidateCode(String code, int timeLenth){
         this.code = code;
         LocalTime now = LocalTime.now();
-        this.localTime = now;
+        this.localTime = now.plusSeconds(timeLenth);
     }
 
 

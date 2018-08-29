@@ -15,7 +15,7 @@ import java.io.IOException;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-@Component("smsCodeProcessor")
+@Component("smsValidateCodeProcessor")
 public class SmsValidateCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {
 
     @Autowired

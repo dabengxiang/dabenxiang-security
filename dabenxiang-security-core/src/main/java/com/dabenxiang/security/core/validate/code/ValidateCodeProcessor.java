@@ -11,8 +11,10 @@ import java.io.IOException;
  */
 public interface ValidateCodeProcessor  {
 
-    String SESSION_VALICATE_CODE_PREFIX = "SESSION_VALICATE_CODE_";
+    String PREFIX_SESSION_KEY = "SESSION_KEY_FOR_CODE_";
 
     public ValidateCode create(ServletWebRequest servletWebRequest) throws IOException;
+
+    public void validate(ServletWebRequest servletWebRequest) throws IOException;
 
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-@Component("imageCodeProcessor")
+@Component("imageValidateCodeProcessor")
 public class ImageValidateCodeProcessor extends AbstractValidateCodeProcessor<ImageCode> {
 
 
@@ -23,4 +23,6 @@ public class ImageValidateCodeProcessor extends AbstractValidateCodeProcessor<Im
     protected void send(ServletWebRequest servletWebRequest, ImageCode imageCode) throws IOException {
         ImageIO.write(imageCode.getBufferedImage(), "JPEG", servletWebRequest.getResponse().getOutputStream());
     }
+
+
 }

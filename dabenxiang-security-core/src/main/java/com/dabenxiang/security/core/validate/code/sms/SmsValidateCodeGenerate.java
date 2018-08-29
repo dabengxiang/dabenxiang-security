@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * Desc: 生成短信验证码
  */
 
-@Component("smsCodeGenerate")
+@Component("smsValidateCodeGenerate")
 public class SmsValidateCodeGenerate implements ValidateCodeGenerate {
 
     @Autowired

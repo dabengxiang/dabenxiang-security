@@ -30,7 +30,7 @@ public class ValidateController {
 
     @GetMapping("/code/{type}")
     public void createCode(HttpServletRequest request, HttpServletResponse response, @PathVariable("type")String type) throws IOException {
-        validateCodeProcessors.get(type+"CodeProcessor").create(new ServletWebRequest(request,response));
+        validateCodeProcessors.get(type+"ValidateCodeProcessor").create(new ServletWebRequest(request,response));
 
     }
 

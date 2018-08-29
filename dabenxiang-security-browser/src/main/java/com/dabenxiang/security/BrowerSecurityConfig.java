@@ -2,7 +2,9 @@ package com.dabenxiang.security;
 
 import com.dabenxiang.security.authentication.GycAuthenticationFailureHandler;
 import com.dabenxiang.security.authentication.GycAuthenticationSuccessHandler;
+import com.dabenxiang.security.core.authentication.AbstractChannelSecurityConfig;
 import com.dabenxiang.security.core.properties.SecurityProperties;
+import com.dabenxiang.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,22 +22,25 @@ import javax.sql.DataSource;
  * Desc:
  */
 @Configuration
-public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
+public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
 
     @Autowired
     private SecurityProperties securityProperties;
 
-    @Autowired
-    private GycAuthenticationSuccessHandler gycAuthenticationSuccessHandler;
-
-    @Autowired
-    private GycAuthenticationFailureHandler gycAuthenticationFailureHandler;
 
     @Autowired
     private DataSource dataSource;
 
     @Autowired
     private MyUserDetailsService myUserDetailsService;
+
+    @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
+
+
+
+
 
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
@@ -44,21 +49,18 @@ public class BrowerSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().loginPage("/authentication/require")
-                .loginProcessingUrl("/authentication/form")
-                .successHandler(gycAuthenticationSuccessHandler)
-                .failureHandler(gycAuthenticationFailureHandler)
-                .and()
-                .rememberMe()
-                    .tokenRepository(getTokenRepository())
-                    .tokenValiditySeconds(6000)
-                    .userDetailsService(myUserDetailsService)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/authentication/require","/code/*",
-                        securityProperties.getBrowser().getLoginPage()).permitAll()
-                .anyRequest().authenticated()
-                .and().csrf().disable();
+        this.defaultApply(http);
+        http.apply(validateCodeSecurityConfig).and()
+            .rememberMe()
+            .tokenRepository(getTokenRepository())
+            .tokenValiditySeconds(6000)
+            .userDetailsService(myUserDetailsService)
+        .and()
+        .authorizeRequests()
+        .antMatchers("/authentication/require","/code/*",
+                securityProperties.getBrowser().getLoginPage()).permitAll()
+        .anyRequest().authenticated()
+        .and().csrf().disable();
     }
 
 
