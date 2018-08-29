@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 @Component("validateCodeSecurityConfig")
 public class ValidateCodeSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
 
-
     @Autowired
     private ValidateCodeFilter validateCodeFilter;
 

@@ -8,12 +8,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.stereotype.Component;
 
 /**
  * Date:2018/8/29
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
+@Component
 public class SmsAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
@@ -39,6 +41,11 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     }
 
 
+    public UserDetailsService getUserDetailsService() {
+        return userDetailsService;
+    }
 
-
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 }

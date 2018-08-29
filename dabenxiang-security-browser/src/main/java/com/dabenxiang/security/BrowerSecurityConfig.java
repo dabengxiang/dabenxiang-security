@@ -5,6 +5,7 @@ import com.dabenxiang.security.authentication.GycAuthenticationSuccessHandler;
 import com.dabenxiang.security.core.authentication.AbstractChannelSecurityConfig;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.dabenxiang.security.core.validate.code.ValidateCodeSecurityConfig;
+import com.dabenxiang.security.core.validate.code.sms.SmsCodeConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,6 +38,9 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
+    @Autowired
+    private SmsCodeConfig smsCodeConfig;
+
 
 
 
@@ -51,6 +55,8 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
     protected void configure(HttpSecurity http) throws Exception {
         this.defaultApply(http);
         http.apply(validateCodeSecurityConfig).and()
+            .apply(smsCodeConfig)
+            .and()
             .rememberMe()
             .tokenRepository(getTokenRepository())
             .tokenValiditySeconds(6000)

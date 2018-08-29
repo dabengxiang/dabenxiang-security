@@ -8,6 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,18 +20,15 @@ import java.io.IOException;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
+@Component
 public class SmsAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     private boolean postOnly = true;
 
     private String mobileParameter = SecurityContants.DEFAULT_PARAMETER_NAME_MOBILE;
 
-
-
-
     public SmsAuthenticationFilter() {
         super(new AntPathRequestMatcher("/mobile", "POST"));
     }
-
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
