@@ -1,4 +1,4 @@
-package com.dabenxiang.security.core.validate.code.sms;
+package com.dabenxiang.security.core.authentication.mobile;
 
 import com.dabenxiang.security.core.authentication.mobile.SmsAuthenticationFilter;
 import com.dabenxiang.security.core.authentication.mobile.SmsAuthenticationProvider;
@@ -11,6 +11,7 @@ import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.stereotype.Component;
 
 /**
  * Date:2018/8/29
@@ -18,12 +19,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * Desc:
  */
 
-@Configuration
+@Component
 public class SmsCodeConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain,HttpSecurity> {
-
-
-    @Autowired
-    private SmsAuthenticationFilter smsAuthenticationFilter;
 
     @Autowired
     private AuthenticationSuccessHandler gycAuthenticationSuccessHandler;
@@ -38,11 +35,13 @@ public class SmsCodeConfig extends SecurityConfigurerAdapter<DefaultSecurityFilt
     @Override
     public void configure(HttpSecurity http) throws Exception {
         AuthenticationManager authenticationManager = http.getSharedObject(AuthenticationManager.class);
+        SmsAuthenticationFilter smsAuthenticationFilter=new SmsAuthenticationFilter();
         smsAuthenticationFilter.setAuthenticationManager(authenticationManager);
         smsAuthenticationFilter.setAuthenticationSuccessHandler(gycAuthenticationSuccessHandler);
         smsAuthenticationFilter.setAuthenticationFailureHandler(gycAuthenticationFailureHandler);
-        HttpSecurity httpSecurity = http.authenticationProvider(provider);
-        http.authenticationProvider(provider).addFilterAfter(smsAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);
+
+        http.authenticationProvider(provider)
+                .addFilterAfter(smsAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);
 
     }
 }

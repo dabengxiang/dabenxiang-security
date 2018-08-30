@@ -14,7 +14,7 @@ security:
 dabenxiang:
   security:
     browser:
-      loginType: REDIRECT
+      loginType: JSON
     validateCodeProperties:
       smsCodeProperties:
         expireIn: 300

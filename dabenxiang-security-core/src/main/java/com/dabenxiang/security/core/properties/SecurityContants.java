@@ -1,11 +1,11 @@
 package com.dabenxiang.security.core.properties;
 
 /**
- * Date:2018/8/28
+ * Date:2018/8/30
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-public class SecurityContants {
+public interface SecurityContants {
     /**
      * 默认的处理验证码的url前缀
      */
@@ -42,8 +42,6 @@ public class SecurityContants {
      * 发送短信验证码 或 验证短信验证码时，传递手机号的参数的名称
      */
     public static final String DEFAULT_PARAMETER_NAME_MOBILE = "mobile";
+
+
 }
-
-
-
-

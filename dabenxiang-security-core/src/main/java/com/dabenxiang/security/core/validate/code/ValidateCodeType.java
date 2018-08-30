@@ -1,6 +1,6 @@
 package com.dabenxiang.security.core.validate.code;
 
-import com.dabenxiang.security.core.properties.SecurityContants;
+import com.dabenxiang.security.core.properties.SecurityConstants;
 
 /**
  * Date:2018/8/28
@@ -15,13 +15,13 @@ public enum ValidateCodeType {
     SMS{
         @Override
         public String getParamNameOnValidate() {
-            return SecurityContants.DEFAULT_PARAMETER_NAME_CODE_SMS;
+            return SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_SMS;
         }
     },
     IMAGE{
         @Override
         public String getParamNameOnValidate() {
-            return SecurityContants.DEFAULT_PARAMETER_NAME_CODE_IMAGE;
+            return SecurityConstants.DEFAULT_PARAMETER_NAME_CODE_IMAGE;
         }
     };
     public  abstract String getParamNameOnValidate();

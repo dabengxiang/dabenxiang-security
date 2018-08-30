@@ -1,6 +1,6 @@
 package com.dabenxiang.security.core.validate.code;
 
-import com.dabenxiang.security.core.properties.SecurityContants;
+import com.dabenxiang.security.core.properties.SecurityConstants;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -55,8 +55,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter {
     @Override
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
-        urlmap.put(SecurityContants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
-        urlmap.put(SecurityContants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);
+        urlmap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM, ValidateCodeType.IMAGE);
+        urlmap.put(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, ValidateCodeType.SMS);
         addUrlMap(securityProperties.getCode().getImageCodeProperties().getUrl(),ValidateCodeType.IMAGE);
         addUrlMap(securityProperties.getCode().getSmsCodeProperties().getUrl(),ValidateCodeType.SMS);
     }

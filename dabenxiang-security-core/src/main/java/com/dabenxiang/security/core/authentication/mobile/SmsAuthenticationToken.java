@@ -24,7 +24,8 @@ public class SmsAuthenticationToken extends AbstractAuthenticationToken {
     public SmsAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;
-        this.setAuthenticated(true);
+        super.setAuthenticated(true);
+
     }
 
     @Override
