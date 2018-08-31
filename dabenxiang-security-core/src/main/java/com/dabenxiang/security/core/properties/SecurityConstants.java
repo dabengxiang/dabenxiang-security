@@ -5,7 +5,7 @@ package com.dabenxiang.security.core.properties;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-public interface SecurityContants {
+public interface SecurityConstants {
     /**
      * 默认的处理验证码的url前缀
      */

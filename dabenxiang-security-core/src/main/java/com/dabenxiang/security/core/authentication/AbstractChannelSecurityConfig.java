@@ -1,12 +1,11 @@
 package com.dabenxiang.security.core.authentication;
 
-import com.dabenxiang.security.core.properties.SecurityContants;
+import com.dabenxiang.security.core.properties.SecurityConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import sun.security.util.SecurityConstants;
 
 /**
  * Date:2018/8/28
@@ -30,8 +29,8 @@ public  class AbstractChannelSecurityConfig extends WebSecurityConfigurerAdapter
     protected void defaultApply(HttpSecurity http) throws Exception {
         
         http.formLogin()
-                .loginPage(SecurityContants.DEFAULT_UNAUTHENTICATION_URL)
-                .loginProcessingUrl(SecurityContants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
+                .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
+                .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
                 .successHandler(gycAuthenticationSuccessHandler)
                 .failureHandler(gycAuthenticationFailureHandler);
     }
