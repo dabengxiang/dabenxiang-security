@@ -46,11 +46,10 @@ public class BrowserSecurityController {
         if(savedRequest!=null){
             String redirectUrl = savedRequest.getRedirectUrl();
             if(StringUtils.endsWithIgnoreCase(redirectUrl,".html")){
-                logger.info("引发过来的路径是："+redirectUrl);
                 String loginPage = securityProperties.getBrowser().getLoginPage();
                 redirectStrategy.sendRedirect(request,response,loginPage);
             }
-
+            logger.info("引发过来的路径是："+redirectUrl);
         }
         return new SimpleResponse("访问的服务需要身份认证，请引导用户到登录页");
 

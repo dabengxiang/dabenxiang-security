@@ -1,5 +1,5 @@
 server:
-  port: 8060
+  port: 9090
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -18,6 +18,12 @@ dabenxiang:
     validateCodeProperties:
       smsCodeProperties:
         expireIn: 300
+    socialProperties:
+      qq:
+        providerId: callback.do
+        app-id: 100550231
+        app-secret: 69b6ab57b22f3c2fe6a6149274e3295e
+
 
 
 

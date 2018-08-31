@@ -1,6 +1,6 @@
 package com.dabenxiang.security.core.properties;
 
-import com.dabenxiang.security.core.validate.code.ValidateCode;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -13,6 +13,8 @@ public class SecurityProperties {
     private BrowserProperties browser = new BrowserProperties();
 
     private ValidateCodeProperties code = new ValidateCodeProperties();
+
+    private SocialProperties socialProperties;
 
     public BrowserProperties getBrowser() {
         return browser;
@@ -30,5 +32,11 @@ public class SecurityProperties {
         this.code = code;
     }
 
+    public SocialProperties getSocialProperties() {
+        return socialProperties;
+    }
 
+    public void setSocialProperties(SocialProperties socialProperties) {
+        this.socialProperties = socialProperties;
+    }
 }

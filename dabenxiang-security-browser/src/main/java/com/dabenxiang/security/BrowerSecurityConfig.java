@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
@@ -38,6 +39,9 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SmsCodeConfig smsCodeConfig;
 
+    @Autowired
+    private SpringSocialConfigurer springSocialConfigurer;
+
     @Bean
     public BCryptPasswordEncoder getBCryptPasswordEncoder(){
         return  new BCryptPasswordEncoder();
@@ -46,10 +50,10 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         this.defaultApply(http);
-        http.apply(validateCodeSecurityConfig).and()
-            .apply(smsCodeConfig)
-            .and()
-            .rememberMe()
+        http.apply(validateCodeSecurityConfig)
+            .and().apply(springSocialConfigurer)
+            .and().apply(smsCodeConfig)
+            .and().rememberMe()
             .tokenRepository(getTokenRepository())
             .tokenValiditySeconds(6000)
             .userDetailsService(myUserDetailsService)
