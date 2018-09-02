@@ -13,5 +13,6 @@ import org.springframework.boot.autoconfigure.social.SocialProperties;
 public class QQProperties extends SocialProperties {
     private String providerId = "qq";
     private String filterProcessesUrl = "/qqLogin";
+    private String sigunUpUrl = "/demo-signUp.html";
 
 }

@@ -12,11 +12,10 @@ import org.springframework.social.security.SpringSocialConfigurer;
  */
 public class dabenxiangSpringSocialConfigurer extends SpringSocialConfigurer {
 
-    private String securityProperties;
+    private String filterProcessesUrl;
 
-
-    public dabenxiangSpringSocialConfigurer(String securityProperties) {
-        this.securityProperties = securityProperties;
+    public dabenxiangSpringSocialConfigurer(String filterProcessesUrl) {
+        this.filterProcessesUrl = filterProcessesUrl;
     }
 
 
@@ -24,7 +23,10 @@ public class dabenxiangSpringSocialConfigurer extends SpringSocialConfigurer {
     protected <T> T postProcess(T object) {
         T result = super.postProcess(object);
         SocialAuthenticationFilter socialAuthenticationFilter = (SocialAuthenticationFilter) result;
-        socialAuthenticationFilter.setFilterProcessesUrl(securityProperties);
+        socialAuthenticationFilter.setFilterProcessesUrl(filterProcessesUrl);
         return result;
     }
+
+
+
 }

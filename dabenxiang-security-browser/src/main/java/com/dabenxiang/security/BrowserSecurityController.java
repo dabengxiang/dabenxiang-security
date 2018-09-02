@@ -3,6 +3,7 @@ package com.dabenxiang.security;
 import com.dabenxiang.security.core.properties.BrowserProperties;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.dabenxiang.security.support.SimpleResponse;
+import com.dabenxiang.security.support.SocialUserInfo;
 import org.apache.commons.lang.StringUtils;
 
 import org.slf4j.Logger;
@@ -14,13 +15,17 @@ import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.logging.SocketHandler;
 
 /**
  * Date:2018/8/8
@@ -38,6 +43,20 @@ public class BrowserSecurityController {
     private SecurityProperties securityProperties;
 
     private Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
+
+    @GetMapping("/social/user")
+    public SocialUserInfo getSocialUserInfo(HttpServletRequest request){
+        Connection<?> connectionFromSession = providerSignInUtils.getConnectionFromSession(new ServletWebRequest(request));
+        SocialUserInfo socialUserInfo = new SocialUserInfo();
+        socialUserInfo.setNickname(connectionFromSession.getDisplayName());
+        socialUserInfo.setHeadimg(connectionFromSession.getImageUrl());
+        socialUserInfo.setProviderId(connectionFromSession.getKey().getProviderId());
+        socialUserInfo.setProviderUserId(connectionFromSession.getKey().getProviderUserId());
+        return socialUserInfo;
+    }
 
     @GetMapping("/authentication/require")
     @ResponseStatus(HttpStatus.UNAUTHORIZED)

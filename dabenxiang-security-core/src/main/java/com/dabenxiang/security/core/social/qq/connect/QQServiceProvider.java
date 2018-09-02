@@ -12,7 +12,6 @@ import org.springframework.social.oauth2.OAuth2Template;
  */
 public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
 
-    private String token;
 
     private String appid;
 
@@ -21,13 +20,13 @@ public class QQServiceProvider extends AbstractOAuth2ServiceProvider<QQ> {
     private static final String  accessTokenUrl = "https://graph.qq.com/oauth2.0/token";
 
     public QQServiceProvider(String appid,String clientSecret ) {
-        super(new OAuth2Template(appid,clientSecret,authorizeUrl,accessTokenUrl));
+        super(new QQOAuth2Template(appid,clientSecret,authorizeUrl,accessTokenUrl));
         this.appid = appid;
+
     }
 
-
     @Override
-    public QQ getApi(String s) {
+    public QQ getApi(String token) {
         return new QQImpl(token,appid);
     }
 }

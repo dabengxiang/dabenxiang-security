@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
+import org.springframework.social.oauth2.TokenStrategy;
 
 /**
  * Date:2018/8/30
@@ -25,19 +26,19 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
     private String openid;
 
     public QQImpl(String accessToken,String appid ) {
-        super(accessToken);
+        super(accessToken, TokenStrategy.ACCESS_TOKEN_PARAMETER);
         this.appid = appid;
         String url = String.format(URL_GET_OPENID, accessToken);
         String returnData = getRestTemplate().getForObject(url,String.class);
-        openid = StringUtils.substringBetween(returnData,"\"openid\":\"","\"");
-        this.appid = appid;
+        openid = StringUtils.substringBetween(returnData,"\"openid\":\"","\"}");
+        this.openid = openid;
 
 
     }
 
     @Override
     public QQUserInfo getUserInfo() {
-        String url = String.format(URL_GET_OPENID, appid,openid);
+        String url = String.format(URL_GET_USERINFO, appid,openid);
         String result = getRestTemplate().getForObject(url,String.class);
         
         try {

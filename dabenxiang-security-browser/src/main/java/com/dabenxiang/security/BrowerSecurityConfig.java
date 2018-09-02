@@ -59,8 +59,11 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
             .userDetailsService(myUserDetailsService)
         .and()
         .authorizeRequests()
-        .antMatchers("/authentication/require","/code/*",
-                securityProperties.getBrowser().getLoginPage()).permitAll()
+        .antMatchers("/authentication/require",
+                                "/code/*",
+                                "/user/regist",
+                                securityProperties.getSocialProperties().getQq().getSigunUpUrl(),
+                                securityProperties.getBrowser().getLoginPage()).permitAll()
         .anyRequest().authenticated()
         .and().csrf().disable();
     }
