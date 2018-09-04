@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.social.security.SpringSocialConfigurer;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 
@@ -61,7 +62,7 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
         .authorizeRequests()
         .antMatchers("/authentication/require",
                                 "/code/*",
-                                "/user/regist",
+                                "/user/regist","/**",
                                 securityProperties.getSocialProperties().getQq().getSigunUpUrl(),
                                 securityProperties.getBrowser().getLoginPage()).permitAll()
         .anyRequest().authenticated()
