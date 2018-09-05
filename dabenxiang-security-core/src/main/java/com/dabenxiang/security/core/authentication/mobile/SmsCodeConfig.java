@@ -4,9 +4,11 @@ import com.dabenxiang.security.core.authentication.mobile.SmsAuthenticationFilte
 import com.dabenxiang.security.core.authentication.mobile.SmsAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.method.P;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -29,7 +31,11 @@ public class SmsCodeConfig extends SecurityConfigurerAdapter<DefaultSecurityFilt
     private AuthenticationFailureHandler gycAuthenticationFailureHandler;
 
     @Autowired
-    private SmsAuthenticationProvider provider;
+    private UserDetailsService userDetailsService;
+
+    //这里不能直接这样注入，因为这样注入的话，默认的provider就会用他了，之前的账号密码provider就没用了
+//    @Autowired
+//    private SmsAuthenticationProvider provider;
 
 
     @Override
@@ -39,6 +45,9 @@ public class SmsCodeConfig extends SecurityConfigurerAdapter<DefaultSecurityFilt
         smsAuthenticationFilter.setAuthenticationManager(authenticationManager);
         smsAuthenticationFilter.setAuthenticationSuccessHandler(gycAuthenticationSuccessHandler);
         smsAuthenticationFilter.setAuthenticationFailureHandler(gycAuthenticationFailureHandler);
+
+        SmsAuthenticationProvider provider = new SmsAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
 
         http.authenticationProvider(provider)
                 .addFilterAfter(smsAuthenticationFilter,UsernamePasswordAuthenticationFilter.class);

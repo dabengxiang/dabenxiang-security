@@ -15,10 +15,12 @@ import org.springframework.stereotype.Component;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-@Component
+
+
+//这里不能直接这样注入，因为这样注入的话，默认的provider就会用他了，之前的账号密码provider就没用了
+//@Component
 public class SmsAuthenticationProvider implements AuthenticationProvider {
 
-    @Autowired
     private UserDetailsService userDetailsService;
 
     @Override
@@ -48,4 +50,6 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
     public void setUserDetailsService(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
+
+
 }

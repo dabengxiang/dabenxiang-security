@@ -12,11 +12,13 @@ import java.util.Map;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-@Component("/connect/status")
+
+@Component("connect/status")
 public class ConnectSatausView extends AbstractView {
     @Override
     protected void renderMergedOutputModel(Map<String, Object> map, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
 
+        System.out.println("1111111111111");
         return ;
     }
 
