@@ -28,7 +28,7 @@ public class MyUserDetailsService implements UserDetailsService,SocialUserDetail
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         String password = passwordEncoder.encode("123456");
         System.out.println(password);
-        return new User("user",password,AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        return new SocialUser(userName,password,AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
     }
 
     @Override

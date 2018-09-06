@@ -46,6 +46,12 @@ public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
+
+    @GetMapping("/me")
+    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+        return user;
+    }
+
     @PostMapping("/regist")
     public void regist(User user, HttpServletRequest request){
         String username = user.getUsername();

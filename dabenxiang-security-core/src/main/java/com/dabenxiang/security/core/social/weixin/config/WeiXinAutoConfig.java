@@ -3,9 +3,11 @@ package com.dabenxiang.security.core.social.weixin.config;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.dabenxiang.security.core.properties.SocialProperties;
 import com.dabenxiang.security.core.properties.WeiXinProperties;
+import com.dabenxiang.security.core.social.ConnectView;
 import com.dabenxiang.security.core.social.weixin.connect.WeiXinConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.social.SocialAutoConfigurerAdapter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.social.connect.ConnectionFactory;
@@ -28,5 +30,10 @@ public class WeiXinAutoConfig extends SocialAutoConfigurerAdapter {
     protected ConnectionFactory<?> createConnectionFactory() {
         WeiXinProperties weixin = securityProperties.getSocialProperties().getWeixin();
         return new WeiXinConnectionFactory(weixin.getProviderId(),weixin.getAppId(),weixin.getAppSecret());
+    }
+
+    @Bean({"connect/weixinConnect", "connect/weixinConnected"})
+    public ConnectView getWeiXinView(){
+        return new ConnectView();
     }
 }
