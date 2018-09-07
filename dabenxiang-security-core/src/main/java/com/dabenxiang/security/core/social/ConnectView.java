@@ -20,6 +20,7 @@ public class ConnectView extends AbstractView {
 
     @Override
     protected void renderMergedOutputModel(Map<String, Object> map, HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
+        httpServletResponse.setContentType("text/html;charset=UTF-8");
         PrintWriter writer = httpServletResponse.getWriter();
 
         if(map.get("connections")==null){
