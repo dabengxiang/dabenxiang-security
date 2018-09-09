@@ -1,6 +1,7 @@
 package com.dabenxiang.security;
 
 import com.dabenxiang.security.core.properties.BrowserProperties;
+import com.dabenxiang.security.core.properties.SecurityConstants;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.dabenxiang.security.support.SimpleResponse;
 import com.dabenxiang.security.support.SocialUserInfo;
@@ -73,5 +74,8 @@ public class BrowserSecurityController {
         return new SimpleResponse("访问的服务需要身份认证，请引导用户到登录页");
 
     }
+
+
+
 
 }

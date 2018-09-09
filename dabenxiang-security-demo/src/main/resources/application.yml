@@ -1,5 +1,8 @@
 server:
   port: 9090
+  session:
+    timeout: 600
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
@@ -7,7 +10,11 @@ spring:
     password: root
     url: jdbc:mysql://127.0.0.1:3306/dabenxiang-security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
   session:
-    store-type: none
+    store-type: REDIS
+  redis:
+    host: localhost
+    port: 6379
+
 security:
   basic:
     enabled: false
@@ -27,7 +34,6 @@ dabenxiang:
         providerId: weixin
         app-id: wxd99431bbff8305a0
         app-secret: 60f78681d063590a469f1b297feff3c4
-
 
 
 

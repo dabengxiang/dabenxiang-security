@@ -1,6 +1,7 @@
 package com.dabenxiang.security.core.validate.code;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.time.LocalTime;
 import java.util.logging.Logger;
 
@@ -9,7 +10,7 @@ import java.util.logging.Logger;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-public class ValidateCode {
+public class ValidateCode  implements Serializable{
     private String code;
     private LocalTime localTime;
 

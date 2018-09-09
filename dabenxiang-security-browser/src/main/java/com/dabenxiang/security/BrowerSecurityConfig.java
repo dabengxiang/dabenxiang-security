@@ -1,14 +1,21 @@
 package com.dabenxiang.security;
 
+import com.dabenxiang.security.authentication.MyLogoutSuccessHandler;
 import com.dabenxiang.security.core.authentication.AbstractChannelSecurityConfig;
 import com.dabenxiang.security.core.properties.SecurityProperties;
+import com.dabenxiang.security.core.properties.SessionProperties;
 import com.dabenxiang.security.core.validate.code.ValidateCodeSecurityConfig;
 import com.dabenxiang.security.core.authentication.mobile.SmsCodeConfig;
+import com.dabenxiang.security.session.MyExpiredSessionStrategy;
+import com.dabenxiang.security.session.MyInvalidSessionStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.social.security.SpringSocialConfigurer;
@@ -32,7 +39,7 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
     private DataSource dataSource;
 
     @Autowired
-    private MyUserDetailsService myUserDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private ValidateCodeSecurityConfig validateCodeSecurityConfig;
@@ -43,10 +50,16 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SpringSocialConfigurer springSocialConfigurer;
 
-    @Bean
-    public BCryptPasswordEncoder getBCryptPasswordEncoder(){
-        return  new BCryptPasswordEncoder();
-    }
+    @Autowired
+    private MyInvalidSessionStrategy myInvalidSessionStrategy;
+
+    @Autowired
+    private MyExpiredSessionStrategy myExpiredSessionStrategy;
+
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -55,15 +68,27 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
             .and().apply(springSocialConfigurer)
             .and().apply(smsCodeConfig)
             .and().rememberMe()
-            .tokenRepository(getTokenRepository())
-            .tokenValiditySeconds(6000)
-            .userDetailsService(myUserDetailsService)
-        .and()
-        .authorizeRequests()
-        .antMatchers("/authentication/require",
+                .tokenRepository(getTokenRepository())
+                .tokenValiditySeconds(6000)
+                .userDetailsService(userDetailsService)
+            .and().sessionManagement()
+               .invalidSessionStrategy(myInvalidSessionStrategy)
+                .maximumSessions(securityProperties.getBrowser().getSession().getMAX_SESISON())
+                .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
+                .expiredSessionStrategy(myExpiredSessionStrategy)
+                .and()
+                .and().logout()
+                    .logoutUrl("/signOut")
+                    .logoutSuccessHandler(logoutSuccessHandler)
+                    .deleteCookies("JSESSIONID")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/authentication/require",
                                 "/code/*",
                                 "/user/regist",
                                 securityProperties.getSocialProperties().getQq().getSigunUpUrl(),
+                                securityProperties.getBrowser().getSession().getSESSION_INVALID_URL(),
+                                securityProperties.getBrowser().getLogOutUrl(),
                                 securityProperties.getBrowser().getLoginPage()).permitAll()
         .anyRequest().authenticated()
         .and().csrf().disable();

@@ -11,12 +11,16 @@
 
     <groupId>com.dabenxiang.security</groupId>
     <artifactId>dabenxiang-security-app</artifactId>
-    <version>${dabenxiang.security.version}</version>
-    
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.dabenxiang.security</groupId>
+            <artifactId>dabenxiang-security-core</artifactId>
+            <version>${dabenxiang.security.version}</version>
         </dependency>
     </dependencies>
 </project>
