@@ -28,14 +28,14 @@ public class MyUserDetailsService implements UserDetailsService,SocialUserDetail
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         String password = passwordEncoder.encode("123456");
         System.out.println(password);
-        return new SocialUser(userName,password,AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+        return new SocialUser(userName,password,AuthorityUtils.commaSeparatedStringToAuthorityList("admin,USER_ROLE"));
     }
 
     @Override
     public SocialUserDetails loadUserByUserId(String userId) throws UsernameNotFoundException {
         String password = passwordEncoder.encode("123456");
         SocialUserDetails socialUserDetails = new SocialUser(userId,password
-                ,AuthorityUtils.commaSeparatedStringToAuthorityList("admin"));
+                ,AuthorityUtils.commaSeparatedStringToAuthorityList("admin,USER_ROLE"));
         return socialUserDetails;
     }
 
