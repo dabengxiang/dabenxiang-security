@@ -45,13 +45,15 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.formLogin().successHandler(successHandler)
                 .failureHandler(failureHandler)
-                .loginPage(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
+                .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)
+                .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)
                 .and()
                 .apply(smsCodeConfig)
                 .and().apply(springSocialConfigurer)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/authentication/require",
+                .antMatchers(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM,
                         "/code/*",
                         "/user/regist",
                         securityProperties.getSocialProperties().getQq().getSigunUpUrl(),

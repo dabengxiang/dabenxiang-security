@@ -21,6 +21,9 @@ import java.util.Map;
  */
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> implements ValidateCodeProcessor {
 
+    @Autowired
+    private ValidateCodeRepository validateCodeRepository;
+
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     @Autowired
@@ -59,8 +62,10 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      * @param servletWebRequest
      */
     protected  void save(C validateCode,ServletWebRequest servletWebRequest){
-        ValidateCode newValda = new ValidateCode(validateCode.getCode(),validateCode.getLocalTime());
-        sessionStrategy.setAttribute(servletWebRequest,getSessionKey(),newValda);
+        ValidateCode newValidateCode = new ValidateCode(validateCode.getCode(),validateCode.getLocalTime());
+        validateCodeRepository.save(servletWebRequest,getValidateCodeType(),validateCode);
+
+
     }
 
 
@@ -85,11 +90,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
 
 
 
-    public String getSessionKey(){
-        ValidateCodeType validateCodeType = getValidateCodeType();
-        String name = validateCodeType.getParamNameOnValidate();
-        return PREFIX_SESSION_KEY+name.toUpperCase();
-    }
+
     
 
     private ValidateCodeType getValidateCodeType(){
@@ -109,8 +110,8 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     public  void validate(ServletWebRequest request){
 
         //获取存在session里的数据
-        String sessionKey = getSessionKey();
-        C sessionValue = (C) sessionStrategy.getAttribute(request, sessionKey);
+
+        C sessionValue = (C) validateCodeRepository.get(request,getValidateCodeType());
 
         String paramName = getValidateCodeType().getParamNameOnValidate();
         String parameterValue = request.getParameter(paramName);
@@ -130,10 +131,8 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
 
         if(!parameterValue.equals(sessionValue.getCode()))
             throw  new ValidateCodeException("验证码不正确！");
-        sessionStrategy.removeAttribute(request,sessionKey);
+        validateCodeRepository.remove(request,getValidateCodeType());
     }
-
-
 
 
 }
