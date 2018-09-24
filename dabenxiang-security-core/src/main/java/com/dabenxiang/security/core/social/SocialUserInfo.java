@@ -1,4 +1,4 @@
-package com.dabenxiang.security.support;
+package com.dabenxiang.security.core.social;
 
 import lombok.Data;
 

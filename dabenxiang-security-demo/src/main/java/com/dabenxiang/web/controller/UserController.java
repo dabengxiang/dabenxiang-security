@@ -1,8 +1,8 @@
 package com.dabenxiang.web.controller;
 
 import com.dabenxiang.dto.User;
-
 import com.dabenxiang.exception.UserNotException;
+import com.dabenxiang.security.app.social.AppSignUpUtils;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,9 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,16 +45,26 @@ public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
+    @Autowired
+    private AppSignUpUtils appSignUpUtils;
+
+
+//    @GetMapping("/me")
+//    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+//        return user;
+//    }
+
 
     @GetMapping("/me")
-    public Object getCurrentUser(@AuthenticationPrincipal UserDetails user) {
+    public Object getCurrentUser(Authentication  user) {
         return user;
     }
 
     @PostMapping("/regist")
     public void regist(User user, HttpServletRequest request){
         String username = user.getUsername();
-        providerSignInUtils.doPostSignUp(username,new ServletWebRequest(request));
+        appSignUpUtils.signUp(new ServletWebRequest(request),username);
+//        providerSignInUtils.doPostSignUp(username,new ServletWebRequest(request));
     }
 
 

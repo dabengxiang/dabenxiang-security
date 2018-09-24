@@ -1,4 +1,4 @@
-package com.dabenxiang.security.core.social.qq;
+package com.dabenxiang.security.core.social;
 
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +10,19 @@ import org.springframework.social.security.SpringSocialConfigurer;
  * Author: yc.guo the one whom in nengxun
  * Desc:
  */
-public class dabenxiangSpringSocialConfigurer extends SpringSocialConfigurer {
+public class DabenxiangSpringSocialConfigurer extends SpringSocialConfigurer {
 
     private String filterProcessesUrl;
 
-    public dabenxiangSpringSocialConfigurer(String filterProcessesUrl) {
+
+    @Autowired(required = false)
+    private SocialAuthenticationFilterPostProcessor socialAuthenticationFilterPostProcessor;
+
+    public DabenxiangSpringSocialConfigurer(String filterProcessesUrl) {
         this.filterProcessesUrl = filterProcessesUrl;
     }
+
+
 
 
     @Override
@@ -24,6 +30,12 @@ public class dabenxiangSpringSocialConfigurer extends SpringSocialConfigurer {
         T result = super.postProcess(object);
         SocialAuthenticationFilter socialAuthenticationFilter = (SocialAuthenticationFilter) result;
         socialAuthenticationFilter.setFilterProcessesUrl(filterProcessesUrl);
+
+
+        if(socialAuthenticationFilterPostProcessor!=null){
+            socialAuthenticationFilterPostProcessor.process(socialAuthenticationFilter);
+        }
+
         return result;
     }
 

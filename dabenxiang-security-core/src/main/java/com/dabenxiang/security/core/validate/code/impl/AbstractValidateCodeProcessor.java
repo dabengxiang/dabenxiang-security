@@ -63,7 +63,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
      */
     protected  void save(C validateCode,ServletWebRequest servletWebRequest){
         ValidateCode newValidateCode = new ValidateCode(validateCode.getCode(),validateCode.getLocalTime());
-        validateCodeRepository.save(servletWebRequest,getValidateCodeType(),validateCode);
+        validateCodeRepository.save(servletWebRequest,getValidateCodeType(),newValidateCode);
 
 
     }
@@ -109,11 +109,14 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode> impl
     @Override
     public  void validate(ServletWebRequest request){
 
+
+        ValidateCodeType validateCodeType = getValidateCodeType();
+
         //获取存在session里的数据
 
-        C sessionValue = (C) validateCodeRepository.get(request,getValidateCodeType());
+        C sessionValue = (C) validateCodeRepository.get(request,validateCodeType);
 
-        String paramName = getValidateCodeType().getParamNameOnValidate();
+        String paramName = validateCodeType.getParamNameOnValidate();
         String parameterValue = request.getParameter(paramName);
 
 

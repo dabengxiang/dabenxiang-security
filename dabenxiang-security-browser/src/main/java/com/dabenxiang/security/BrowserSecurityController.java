@@ -1,10 +1,8 @@
 package com.dabenxiang.security;
 
-import com.dabenxiang.security.core.properties.BrowserProperties;
-import com.dabenxiang.security.core.properties.SecurityConstants;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.dabenxiang.security.support.SimpleResponse;
-import com.dabenxiang.security.support.SocialUserInfo;
+import com.dabenxiang.security.core.social.SocialUserInfo;
 import org.apache.commons.lang.StringUtils;
 
 import org.slf4j.Logger;
@@ -26,7 +24,6 @@ import org.springframework.web.context.request.ServletWebRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.logging.SocketHandler;
 
 /**
  * Date:2018/8/8

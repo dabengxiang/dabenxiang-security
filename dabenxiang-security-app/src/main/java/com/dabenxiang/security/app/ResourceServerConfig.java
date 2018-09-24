@@ -1,21 +1,17 @@
 package com.dabenxiang.security.app;
 
+import com.dabenxiang.security.app.authentication.openid.OpenIdConfig;
 import com.dabenxiang.security.core.authentication.mobile.SmsCodeConfig;
 import com.dabenxiang.security.core.properties.SecurityConstants;
 import com.dabenxiang.security.core.properties.SecurityProperties;
-import com.dabenxiang.security.core.social.qq.SocialConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
-import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfiguration;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.social.security.SpringSocialConfigurer;
-
-import javax.jws.Oneway;
 
 /**
  * Date:2018/9/11
@@ -41,6 +37,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private SpringSocialConfigurer springSocialConfigurer;
 
+
+    @Autowired
+    private OpenIdConfig openIdConfig;
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.formLogin().successHandler(successHandler)
@@ -50,12 +50,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and()
                 .apply(smsCodeConfig)
                 .and().apply(springSocialConfigurer)
+                .and().apply(openIdConfig)
                 .and()
                 .authorizeRequests()
                 .antMatchers(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                         SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM,
+                        SecurityConstants.DEFAULT_OPENID_URL,
                         "/code/*",
-                        "/user/regist",
+                        "/user/regist","/social/signUp","/user/regist",
                         securityProperties.getSocialProperties().getQq().getSigunUpUrl(),
                         securityProperties.getBrowser().getSession().getSESSION_INVALID_URL(),
                         securityProperties.getBrowser().getLogOutUrl(),

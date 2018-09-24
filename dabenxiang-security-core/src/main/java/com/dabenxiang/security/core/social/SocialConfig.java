@@ -1,4 +1,4 @@
-package com.dabenxiang.security.core.social.qq;
+package com.dabenxiang.security.core.social;
 
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.dabenxiang.security.core.properties.SocialProperties;
@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurerAdapter;
 import org.springframework.social.connect.ConnectionFactoryLocator;
@@ -39,11 +38,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Autowired(required = false)
     private ConnectionSignUp connectionSignUp;
 
-    @Bean
+    @Bean(name = "dabenxiangSpringSocialConfigurer")
     public SpringSocialConfigurer getSocialConfigurer(){
         SocialProperties socialProperties = securtyProperties.getSocialProperties();
 
-        dabenxiangSpringSocialConfigurer springSocialConfigurer = new dabenxiangSpringSocialConfigurer(
+        DabenxiangSpringSocialConfigurer springSocialConfigurer = new DabenxiangSpringSocialConfigurer(
                 socialProperties.getQq().getFilterProcessesUrl());
         springSocialConfigurer.signupUrl(socialProperties.getQq().getSigunUpUrl());
 
@@ -56,8 +55,8 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Override
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         JdbcUsersConnectionRepository connectionRepository = new JdbcUsersConnectionRepository(dataSource, connectionFactoryLocator, Encryptors.noOpText());
-        if(connectionSignUp!=null)
-            connectionRepository.setConnectionSignUp(connectionSignUp);
+//        if(connectionSignUp!=null)
+//            connectionRepository.setConnectionSignUp(connectionSignUp);
         return connectionRepository;
     }
 
