@@ -1,0 +1,21 @@
+server:
+  context-path: /client1
+  port: 9091
+security:
+  oauth2:
+    client:
+      client-id: myClient1
+      client-secret: myClient1
+      access-token-uri: http://localhost:9090/server/oauth/token
+      user-authorization-uri: http://localhost:9090/server/oauth/authorize
+
+    resource:
+      user-info-uri:  http://localhost:9091/client1/user
+      token-info-uri: http://localhost:9090/server/oauth/check_token
+      jwt:
+        key-uri: http://localhost:9090/server/oauth/token_key
+
+
+
+
+

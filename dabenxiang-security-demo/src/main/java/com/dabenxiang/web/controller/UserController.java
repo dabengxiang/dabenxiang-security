@@ -3,13 +3,19 @@ package com.dabenxiang.web.controller;
 import com.dabenxiang.dto.User;
 import com.dabenxiang.exception.UserNotException;
 import com.dabenxiang.security.app.social.AppSignUpUtils;
+import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -23,6 +29,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +46,12 @@ import java.util.List;
 @EnableScheduling
 @RequestMapping("/user")
 @Api("用户处理")
+@Slf4j
 public class UserController {
+
+
+    @Autowired
+    private SecurityProperties securityProperties;
 
 
     @Autowired
@@ -56,8 +68,17 @@ public class UserController {
 
 
     @GetMapping("/me")
-    public Object getCurrentUser(Authentication  user) {
-        return user;
+    public Object getCurrentUser(Authentication  user,HttpServletRequest request) throws UnsupportedEncodingException {
+        String token = StringUtils.substringAfter(request.getHeader("Authorization"), "bearer ");
+        byte[] bytes = securityProperties.getOauth2().getJwtKey().getBytes("utf-8");
+
+        Claims body = Jwts.parser().setSigningKey(bytes)
+                .parseClaimsJws(token).getBody();
+
+
+        Object company = body.get("company");
+        log.info(company.toString());
+        return body;
     }
 
     @PostMapping("/regist")

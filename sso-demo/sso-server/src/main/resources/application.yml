@@ -1,0 +1,6 @@
+server:
+  port: 9090
+  context-path: /server
+security:
+  user:
+    password: 123456
