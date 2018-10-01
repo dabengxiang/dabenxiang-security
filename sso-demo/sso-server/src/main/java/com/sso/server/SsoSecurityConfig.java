@@ -31,6 +31,10 @@ public class SsoSecurityConfig  extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+//        auth.jdbcAuthentication();
+
+
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -41,6 +45,8 @@ public class SsoSecurityConfig  extends WebSecurityConfigurerAdapter {
                 .anyRequest().permitAll()
                 .and().csrf();
     }
+
+
 
 
 

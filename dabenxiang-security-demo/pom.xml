@@ -13,18 +13,18 @@
     <artifactId>dabenxiang-security-demo</artifactId>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>com.dabenxiang.security</groupId>-->
-            <!--<artifactId>dabenxiang-security-browser</artifactId>-->
-            <!--<version>${dabenxiang.security.version}</version>-->
-        <!--</dependency>-->
-
-
         <dependency>
             <groupId>com.dabenxiang.security</groupId>
-            <artifactId>dabenxiang-security-app</artifactId>
+            <artifactId>dabenxiang-security-browser</artifactId>
             <version>${dabenxiang.security.version}</version>
         </dependency>
+
+
+        <!--<dependency>-->
+            <!--<groupId>com.dabenxiang.security</groupId>-->
+            <!--<artifactId>dabenxiang-security-app</artifactId>-->
+            <!--<version>${dabenxiang.security.version}</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>com.dabenxiang.security</groupId>

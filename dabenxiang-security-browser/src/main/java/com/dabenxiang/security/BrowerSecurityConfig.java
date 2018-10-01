@@ -2,6 +2,8 @@ package com.dabenxiang.security;
 
 import com.dabenxiang.security.authentication.MyLogoutSuccessHandler;
 import com.dabenxiang.security.core.authentication.AbstractChannelSecurityConfig;
+import com.dabenxiang.security.core.authorize.AuthorizeConfigManager;
+import com.dabenxiang.security.core.properties.SecurityConstants;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.dabenxiang.security.core.properties.SessionProperties;
 import com.dabenxiang.security.core.validate.code.ValidateCodeSecurityConfig;
@@ -59,6 +61,11 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private LogoutSuccessHandler logoutSuccessHandler;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
+
+
 
 
     @Override
@@ -82,16 +89,9 @@ public class BrowerSecurityConfig extends AbstractChannelSecurityConfig {
                     .logoutSuccessHandler(logoutSuccessHandler)
                     .deleteCookies("JSESSIONID")
                 .and()
-                .authorizeRequests()
-                .antMatchers("/authentication/require",
-                                "/code/*",
-                                "/user/regist",
-                                securityProperties.getSocialProperties().getQq().getSigunUpUrl(),
-                                securityProperties.getBrowser().getSession().getSESSION_INVALID_URL(),
-                                securityProperties.getBrowser().getLogOutUrl(),
-                                securityProperties.getBrowser().getLoginPage()).permitAll()
-        .anyRequest().authenticated()
-        .and().csrf().disable();
+                .csrf().disable();
+
+        authorizeConfigManager.config(http.authorizeRequests());
     }
 
 

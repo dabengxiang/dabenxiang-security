@@ -53,9 +53,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .and().apply(openIdConfig)
                 .and()
                 .authorizeRequests()
-                .antMatchers(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM,
-                        SecurityConstants.DEFAULT_OPENID_URL,
+                .antMatchers(
                         "/code/*",
                         "/user/regist","/social/signUp","/user/regist",
                         securityProperties.getSocialProperties().getQq().getSigunUpUrl(),

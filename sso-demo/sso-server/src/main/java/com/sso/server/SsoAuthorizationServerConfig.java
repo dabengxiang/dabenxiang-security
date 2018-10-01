@@ -12,6 +12,8 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
+import javax.sql.DataSource;
+
 /**
  * Date:2018/9/25
  * Author: yc.guo the one whom in nengxun
@@ -20,6 +22,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @Configuration
 @EnableAuthorizationServer
 public class SsoAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+
+
+
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

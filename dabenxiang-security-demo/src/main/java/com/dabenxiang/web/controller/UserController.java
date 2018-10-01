@@ -2,7 +2,7 @@ package com.dabenxiang.web.controller;
 
 import com.dabenxiang.dto.User;
 import com.dabenxiang.exception.UserNotException;
-import com.dabenxiang.security.app.social.AppSignUpUtils;
+//import com.dabenxiang.security.app.social.AppSignUpUtils;
 import com.dabenxiang.security.core.properties.SecurityProperties;
 import com.fasterxml.jackson.annotation.JsonView;
 import io.jsonwebtoken.Claims;
@@ -57,8 +57,8 @@ public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
-    @Autowired
-    private AppSignUpUtils appSignUpUtils;
+//    @Autowired
+//    private AppSignUpUtils appSignUpUtils;
 
 
 //    @GetMapping("/me")
@@ -84,8 +84,8 @@ public class UserController {
     @PostMapping("/regist")
     public void regist(User user, HttpServletRequest request){
         String username = user.getUsername();
-        appSignUpUtils.signUp(new ServletWebRequest(request),username);
-//        providerSignInUtils.doPostSignUp(username,new ServletWebRequest(request));
+//        appSignUpUtils.signUp(new ServletWebRequest(request),username);
+        providerSignInUtils.doPostSignUp(username,new ServletWebRequest(request));
     }
 
 

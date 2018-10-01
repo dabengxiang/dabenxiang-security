@@ -13,4 +13,19 @@
     <artifactId>dabenxiang-security-authorize</artifactId>
 
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <version>2.5</version>
+        </dependency>
+
+
+    </dependencies>
+
+
 </project>
