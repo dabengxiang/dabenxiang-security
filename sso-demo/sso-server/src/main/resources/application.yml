@@ -4,3 +4,13 @@ server:
 security:
   user:
     password: 123456
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/dabenxiang-security?useUnicode=yes&characterEncoding=UTF-8&useSSL=false
+    type: com.alibaba.druid.pool.DruidDataSource
+
+
+
